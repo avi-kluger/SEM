@@ -1,29 +1,3 @@
-#Q 14.1
-#------------
-# input Table 14.4
-
-txt <- 'Constructive_w_Dysfunctional -.028 .018 -.124 .073
-Constructive_w_SubjectiveWellBeing .024 .014 .140 .080
-Constructive_w_JobSatisfaction .060 .029 .165 .074
-Dysfunctional_w_SubjectiveWellBeing -.088 .018 -.480 .063
-Dysfunctional_w_JobSatisfaction -.132 .030 -.344 .064
-SubjectiveWellBeing_w_JobSatisfaction .139 .027 .466 .066'
-
-x           <- data.frame(read.table(text = txt))
-
-x$UnstandardizedZ <- x$V2/x$V3
-x$StandardizedZ   <- x$V4/x$V5
-x$UnstandardizedP <- ifelse(x$UnstandardizedZ > 0,
-                            1-pnorm(x$UnstandardizedZ),
-                            pnorm(x$UnstandardizedZ))
-x$StandardizedP   <- ifelse(x$StandardizedZ > 0,
-                            1-pnorm(x$StandardizedZ),
-                            pnorm(x$StandardizedZ))
-rownames(x) <- x[, 1]
-round(x[,-c(1:5)], 3)
-#------------
-#Q14.2
-#-----------
 # principles and practice of sem (4th ed.), rex kline
 # fully latent model of thought strategies and job satisfaction
 # figures 10.6, 14.1-14.2, table 14.1
@@ -46,13 +20,15 @@ houghtonLower.cor <- '
 .061  .028 -.035  -.058 -.051 -.003 -.040 -.040 -.018 .284 1.000
 .113  .174  .059   .063  .138  .044 -.119 -.073 -.084 .563  .379 1.000 '
 # name the variables and convert to full correlation matrix
-houghtonFull.cor <- 
-  getCov(houghtonLower.cor, names = c("wk1","wk2","wk3","hap","md1","md2","pr1","pr2","app","bel","st","ima"))
+houghtonFull.cor <- getCov(houghtonLower.cor, 
+                    names = c("wk1","wk2","wk3","hap","md1",
+                              "md2","pr1","pr2","app","bel","st","ima"))
 # display the correlations
 houghtonFull.cor
 # add the standard deviations and convert to covariances
 houghtonFull.cov <- 
-  cor2cov(houghtonFull.cor, sds = c(.939,1.017,.937,.562,.760,.524,.585,.609,.731,.711,1.124,1.001))
+  cor2cov(houghtonFull.cor, 
+        sds = c(.939,1.017,.937,.562,.760,.524,.585,.609,.731,.711,1.124,1.001))
 houghtonFull.cov
 
 # specify cfa model
@@ -154,7 +130,8 @@ changLower.cor <- '
 -.50 -.02 -.40 -.63 -.28 -.58 .56 1.0 '
 # name the variables and convert to full correlation matrix
 changFull.cor <-
-  getCov(changLower.cor, names = c("aoc","coc","noc","apc","cpc","npc","orgti","occti"))
+  getCov(changLower.cor, 
+         names = c("aoc","coc","noc","apc","cpc","npc","orgti","occti"))
 # display the correlations
 changFull.cor
 # add the standard deviations and convert to covariances
